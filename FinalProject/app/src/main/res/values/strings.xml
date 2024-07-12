@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FinalProject</string>
+
+    <!-- THIS MUST MATCH YOUR APP PACKAGE NAME OR ELSE CAMERA WILL-->
+    <!-- INDICATE A CONFLICTING PROVIDER -->
+    <string name="fileAuthority">angchoachuyevangelista.finals.finalproject</string>
+</resources>
