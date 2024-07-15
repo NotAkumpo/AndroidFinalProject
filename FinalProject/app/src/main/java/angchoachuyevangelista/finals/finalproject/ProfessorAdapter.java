@@ -1,7 +1,10 @@
 package angchoachuyevangelista.finals.finalproject;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -21,83 +24,98 @@ import java.io.File;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-public class UserAdapter extends RealmRecyclerViewAdapter<User, UserAdapter.ViewHolder> {
+public class ProfessorAdapter extends RealmRecyclerViewAdapter<Professor, ProfessorAdapter.ViewHolder> {
 
-
+    SharedPreferences prefs;
+    String currentUuid;
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView usernameDisplay;
-        TextView passwordDisplay;
+        TextView profnameLabel;
+        TextView classLabel;
+        ImageButton searchButton;
         ImageButton deleteButton;
         ImageButton editButton;
-        ImageView imageViewA;
+        ImageView professorImage;
         AlertDialog.Builder builder;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
 
-            imageViewA = itemView.findViewById(R.id.professorImagePL);
-            usernameDisplay = itemView.findViewById(R.id.profnameLabelPL);
-            passwordDisplay = itemView.findViewById(R.id.classLabelPL);
+            profnameLabel = itemView.findViewById(R.id.profnameLabelPL);
+            classLabel = itemView.findViewById(R.id.classLabelPL);
 
-            deleteButton = itemView.findViewById(R.id.deleteButton);
-            editButton = itemView.findViewById(R.id.searchButtonPL);
+            searchButton = itemView.findViewById(R.id.searchButtonPL);
+            deleteButton = itemView.findViewById(R.id.deleteButtonPL);
+            editButton = itemView.findViewById(R.id.editButtonPL);
+
+            professorImage = itemView.findViewById(R.id.professorImagePL);
         }
+
     }
 
 
-    AdminActivity activity;
+    ProfessorListActivity activity;
 
-    public UserAdapter(AdminActivity activity, @Nullable OrderedRealmCollection<User> data, boolean autoUpdate){
+    public ProfessorAdapter(ProfessorListActivity activity, @Nullable OrderedRealmCollection<Professor> data, boolean autoUpdate){
         super(data, autoUpdate);
 
         this.activity = activity;
+        prefs = activity.getSharedPreferences("myPrefs", MODE_PRIVATE);
+        currentUuid = prefs.getString("uuid", null);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        View v = activity.getLayoutInflater().inflate(R.layout.row_layout, parent, false);
+        View v = activity.getLayoutInflater().inflate(R.layout.professor_layout, parent, false);
 
-        ViewHolder vh = new ViewHolder(v);
+        ProfessorAdapter.ViewHolder vh = new ProfessorAdapter.ViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position){
 
-        User u = getItem(position);
+        Professor p = getItem(position);
 
-        String uuid = u.getUuid();
-        holder.usernameDisplay.setText(u.getName());
-        holder.passwordDisplay.setText(u.getPassword());
+        String name = p.getFirstName() + " " + p.getLastName();
+
+        holder.profnameLabel.setText(name);
+        holder.classLabel.setText(p.getClassTeaching());
 
         File getImageDir = activity.getExternalCacheDir();
-        File file = new File(getImageDir, u.getPath());
+        File file = new File(getImageDir, p.getPath());
 
         if (file.exists()) {
             Picasso.get()
                     .load(file)
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .into(holder.imageViewA);
+                    .into(holder.professorImage);
         }
         else {
-            holder.imageViewA.setImageResource(R.drawable.profile_pic);
+            holder.professorImage.setImageResource(R.drawable.profile_pic);
+        }
+
+        if(p.getAdderUuid().equals(currentUuid)){
+        }
+        else{
+            holder.deleteButton.setVisibility(View.GONE);
+            holder.editButton.setVisibility(View.GONE);
         }
 
         holder.builder = new AlertDialog.Builder(activity);
-        holder.deleteButton.setTag(u);
+        holder.deleteButton.setTag(p);
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 holder.builder.setTitle("Caution: ")
-                        .setMessage("Are you sure you want to delete this user?")
+                        .setMessage("Are you sure you want to delete this professor?")
                         .setCancelable(true)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                activity.delete((User) v.getTag());
+                                activity.delete((Professor) v.getTag());
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -107,18 +125,27 @@ public class UserAdapter extends RealmRecyclerViewAdapter<User, UserAdapter.View
                             }
                         })
                         .show();
-
-
             }
         });
 
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.openEdit(uuid);
+                activity.openEdit(p.getUuid());
+            }
+        });
+
+        holder.searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.openReviews(p.getUuid());
             }
         });
 
     }
 
+
+
+
 }
+

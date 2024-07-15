@@ -1,9 +1,14 @@
 package angchoachuyevangelista.finals.finalproject;
 
+import java.util.UUID;
+
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Professor extends RealmObject {
 
+    @PrimaryKey
+    private String uuid = UUID.randomUUID().toString();
     private String firstName;
     private String lastName;
     private String classTeaching;
@@ -61,6 +66,13 @@ public class Professor extends RealmObject {
         this.path = path;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     //Use this method to update the average rating of the prof everytime a review is added
     public void updateRating(Double r){

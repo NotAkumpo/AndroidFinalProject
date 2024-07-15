@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.MemoryPolicy;
@@ -27,7 +28,7 @@ import io.realm.RealmResults;
 public class ProfessorListActivity extends AppCompatActivity {
 
 
-    RecyclerView recyclerViewPL;
+    RecyclerView recyclerView;
     Button addProfButton;
     Button logoutButton;
     ImageView userImage;
@@ -41,10 +42,11 @@ public class ProfessorListActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_professor_list);
 
+        recyclerView = findViewById(R.id.recyclerViewPL);
+
         prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
 
         realm = Realm.getDefaultInstance();
-        RealmResults<User> users = realm.where(User.class).findAll();
 
         String uuid = prefs.getString("uuid", null);
 
@@ -67,7 +69,7 @@ public class ProfessorListActivity extends AppCompatActivity {
                     .into(userImage);
         }
         else {
-            userImage.setImageResource(R.mipmap.ic_launcher);
+            userImage.setImageResource(R.drawable.profile_pic);
         }
 
         addProfButton = findViewById(R.id.addProfButtonPL);
@@ -86,6 +88,16 @@ public class ProfessorListActivity extends AppCompatActivity {
             }
         });
 
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        realm = Realm.getDefaultInstance();
+        RealmResults<Professor> list = realm.where(Professor.class).findAll();
+
+        ProfessorAdapter adapter = new ProfessorAdapter(this, list, true);
+        recyclerView.setAdapter(adapter);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -101,9 +113,40 @@ public class ProfessorListActivity extends AppCompatActivity {
     public void logout(){
         SharedPreferences.Editor edit = prefs.edit();
         edit.putString("uuid", null);
+        edit.putBoolean("remembered", false);
         edit.apply();
 
         finish();
+    }
+
+    public void openEdit(String uuid){
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putString("profUuid", uuid);
+        edit.apply();
+
+        Intent intent = new Intent(this, ProfessorEditActivity.class);
+        startActivity(intent);
+    }
+
+    public void openReviews(String uuid){
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putString("profUuid", uuid);
+        edit.apply();
+
+        Intent intent = new Intent(this, ReviewListActivity.class);
+        startActivity(intent);
+    }
+
+    public void delete(Professor p){
+        if (p.isValid())
+        {
+
+            realm.beginTransaction();
+            p.deleteFromRealm();
+            realm.commitTransaction();
+
+            //Make a method here to delete all reviews as well
+        }
     }
 
     public void onDestroy()

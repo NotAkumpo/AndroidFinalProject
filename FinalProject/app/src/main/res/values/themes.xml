@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.FinalProject" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">#FECB10</item>
+        <item name="colorPrimaryVariant">#FECB10</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,5 +12,14 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/circular_std_medium_500</item>
+        <item name="fontFamily">@font/circular_std_medium_500</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:buttonStyle">@style/BlackTextButton</item>
+        <item name="buttonStyle">@style/BlackTextButton</item>
+        <item name="colorButtonNormal">#FECB10</item>
+    </style>
+    <style name="BlackTextButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>
