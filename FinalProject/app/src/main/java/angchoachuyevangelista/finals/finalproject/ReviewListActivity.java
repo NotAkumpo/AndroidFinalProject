@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -25,6 +27,7 @@ import io.realm.RealmResults;
 
 public class ReviewListActivity extends AppCompatActivity {
 
+    RecyclerView recyclerView;
     TextView profnameLabel;
     TextView classLabel;
     TextView ratingLabel;
@@ -43,6 +46,8 @@ public class ReviewListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_review_list);
+
+        recyclerView = findViewById(R.id.recyclerViewRL);
 
         prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
 
@@ -126,6 +131,15 @@ public class ReviewListActivity extends AppCompatActivity {
             }
         });
 
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        realm = Realm.getDefaultInstance();
+        RealmResults<Review> list = realm.where(Review.class).findAll();
+
+        ReviewAdapter adapter = new ReviewAdapter(this, list, true);
+        recyclerView.setAdapter(adapter);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

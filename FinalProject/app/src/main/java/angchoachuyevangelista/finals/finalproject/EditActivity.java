@@ -182,7 +182,10 @@ public class EditActivity extends AppCompatActivity {
 
                         currentUser.setName(username);
                         currentUser.setPassword(password);
-                        currentUser.setPath(path+".jpeg");
+
+                        if(path != null){
+                            currentUser.setPath(path + ".jpeg");
+                        }
 
                         realm.copyToRealmOrUpdate(currentUser);
                         realm.commitTransaction();
@@ -233,6 +236,7 @@ public class EditActivity extends AppCompatActivity {
                             .networkPolicy(NetworkPolicy.NO_CACHE)
                             .memoryPolicy(MemoryPolicy.NO_CACHE)
                             .into(imageViewE);
+
                 }
                 catch(Exception e)
                 {

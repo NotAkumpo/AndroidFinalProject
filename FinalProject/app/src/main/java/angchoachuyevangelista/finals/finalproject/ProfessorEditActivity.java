@@ -106,7 +106,8 @@ public class ProfessorEditActivity extends AppCompatActivity {
                         .findFirst();
                 if ((firstName == null || firstName.isEmpty()) || (lastName == null || lastName.isEmpty()) || (classTeaching == null || classTeaching.isEmpty())) {
                     blank();
-                } else if (existingProf != null && !existingProf.getAdderUuid().equals(currentProf.getAdderUuid())) {
+                } else if (existingProf != null && !existingProf.getFirstName().equals(currentProf.getFirstName()) && !existingProf.getLastName().equals(currentProf.getLastName())
+                        && !existingProf.getClassTeaching().equals(currentProf.getClassTeaching())) {
                     exists();
                 } else {
                     realm.beginTransaction();
@@ -114,7 +115,11 @@ public class ProfessorEditActivity extends AppCompatActivity {
                     currentProf.setFirstName(firstName);
                     currentProf.setLastName(lastName);
                     currentProf.setClassTeaching(classTeaching);
-                    currentProf.setPath(path+".jpeg");
+
+                    if(path != null) {
+                        currentProf.setPath(path + ".jpeg");
+                    }
+
                     realm.copyToRealmOrUpdate(currentProf);
                     realm.commitTransaction();
 
