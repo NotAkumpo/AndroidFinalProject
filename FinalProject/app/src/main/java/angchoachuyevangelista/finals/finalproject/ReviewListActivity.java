@@ -79,6 +79,7 @@ public class ReviewListActivity extends AppCompatActivity {
 
         File getImageDir = getExternalCacheDir();
         profImage = findViewById(R.id.professorImageRL);
+
         File file = new File(getImageDir, currentProf.getPath());
 
         if (file.exists()) {
@@ -89,7 +90,7 @@ public class ReviewListActivity extends AppCompatActivity {
                     .into(profImage);
         }
         else {
-            userImage.setImageResource(R.drawable.profile_pic);
+            profImage.setImageResource(R.drawable.profile_pic);
         }
 
         usernameLabel = findViewById(R.id.usernameLabelRL);

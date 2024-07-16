@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -156,6 +157,11 @@ public class ProfessorListActivity extends AppCompatActivity {
         {
             realm.close();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Please press the logout button to return", Toast.LENGTH_LONG).show();
     }
 
 }
