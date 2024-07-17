@@ -1,16 +1,34 @@
 package angchoachuyevangelista.finals.finalproject;
 
+import java.util.UUID;
+
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Review extends RealmObject {
 
+    @PrimaryKey
+    private String uuid = UUID.randomUUID().toString();
     private String assessment;
     private String adderUuid;
+    private String professorUuid;
     private String adderUsername;
     private Double overallRating;
     private String professorName;
     private String professorClass;
     private String path;
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getProfessorUuid() { return professorUuid;}
+
+    public void setProfessorUuid(String professorUuid) { this.professorUuid = professorUuid;}
 
     public String getAssessment() {
         return assessment;

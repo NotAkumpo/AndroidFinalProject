@@ -1,5 +1,10 @@
 package angchoachuyevangelista.finals.finalproject;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -10,11 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
 public class ReviewAdapter extends RealmRecyclerViewAdapter<Review, ReviewAdapter.ViewHolder> {
-
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -24,6 +34,7 @@ public class ReviewAdapter extends RealmRecyclerViewAdapter<Review, ReviewAdapte
         ImageButton editButton;
         ImageButton searchButton;
         ImageView reviewerImage;
+        AlertDialog.Builder builder;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
@@ -36,6 +47,7 @@ public class ReviewAdapter extends RealmRecyclerViewAdapter<Review, ReviewAdapte
             searchButton = itemView.findViewById(R.id.searchButtonREL);
 
             reviewerImage = itemView.findViewById(R.id.reviewerImageREL);
+
         }
 
     }
@@ -63,6 +75,68 @@ public class ReviewAdapter extends RealmRecyclerViewAdapter<Review, ReviewAdapte
         Review r = getItem(position);
 
         holder.reviewerLabel.setText(r.getAdderUsername());
+
+        File getImageDir = activity.getExternalCacheDir();
+        File file = new File(getImageDir, r.getPath());
+
+        String rating;
+        if (r.getOverallRating() != null) {
+            rating = r.getOverallRating().toString();
+        } else {
+            rating = "-";
+        }
+        String ratingPhrase = "Overall Rating: " + rating + " /10";
+        holder.ratingLabel.setText(ratingPhrase);
+
+        if (file.exists()) {
+            Picasso.get()
+                    .load(file)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .into(holder.reviewerImage);
+        }
+        else {
+            holder.reviewerImage.setImageResource(R.drawable.profile_pic);
+        }
+
+        holder.builder = new AlertDialog.Builder(activity);
+        holder.deleteButton.setTag(r);
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.builder.setTitle("Caution: ")
+                        .setMessage("Are you sure you want to delete this review?")
+                        .setCancelable(true)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                activity.delete((Review) v.getTag());
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .show();
+
+
+            }
+        });
+
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {activity.editReview(r.getAdderUuid(), r.getUuid());}
+        });
+
+        holder.searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.openReview(r.getUuid());
+            }
+        });
 
     }
 

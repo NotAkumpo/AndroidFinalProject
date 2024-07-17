@@ -39,24 +39,10 @@
         android:text="Review:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.403" />
-
-    <EditText
-        android:id="@+id/ratingDisplayRD"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="(x)/10"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.601"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.848" />
+        app:layout_constraintVertical_bias="0.399" />
 
     <Button
         android:id="@+id/returnButtonRD"
@@ -77,28 +63,46 @@
         android:text="Overall Rating: "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintHorizontal_bias="0.173"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.837" />
+        app:layout_constraintVertical_bias="0.838" />
 
     <TextView
         android:id="@+id/profnameLabelRD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginBottom="1dp"
         android:text="Professor Name"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="71dp" />
+        app:layout_constraintBottom_toTopOf="@+id/classLabelRD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userLabelRD" />
 
     <TextView
         android:id="@+id/reviewDetailRD"
         android:layout_width="389dp"
         android:layout_height="254dp"
+        android:layout_margin="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="28dp"
+        android:gravity="left"
         android:outlineProvider="bounds"
         android:text="(Maker's Review)"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="315dp" />
+        android:translationX="20dp"
+        android:translationY="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/ratingdisplayRD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewLabelRD"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/classLabelRD"
@@ -111,4 +115,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.138" />
+
+    <TextView
+        android:id="@+id/ratingdisplayRD"
+        android:layout_width="176dp"
+        android:layout_height="20dp"
+        android:hint="x/10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.339"
+        app:layout_constraintStart_toEndOf="@+id/ratingLabelRD"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.838" />
 </androidx.constraintlayout.widget.ConstraintLayout>

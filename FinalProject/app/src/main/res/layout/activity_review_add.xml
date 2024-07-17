@@ -13,8 +13,11 @@
         android:layout_height="wrap_content"
         android:text="Class"
         android:textSize="16sp"
-        tools:layout_editor_absoluteX="185dp"
-        tools:layout_editor_absoluteY="98dp" />
+        app:layout_constraintBottom_toTopOf="@+id/professorImageRA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profnameLabelRA"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/addLabelRA"
@@ -24,10 +27,9 @@
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.037" />
+        app:layout_constraintVertical_bias="0.023" />
 
     <ImageView
         android:id="@+id/professorImageRA"
@@ -35,7 +37,7 @@
         android:layout_height="155dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.208"
@@ -48,24 +50,25 @@
         android:text="Write review here:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintHorizontal_bias="0.017"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.403" />
+        app:layout_constraintVertical_bias="0.395" />
 
     <EditText
         android:id="@+id/ratingInputRA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:gravity="center_horizontal"
         android:hint="(x)/10"
-        android:inputType="textPassword"
+        android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.601"
+        app:layout_constraintHorizontal_bias="0.818"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.848" />
+        app:layout_constraintVertical_bias="0.847" />
 
     <Button
         android:id="@+id/cancelButtonRA"
@@ -97,10 +100,11 @@
         android:id="@+id/ratingLabelRA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Overall Rating: "
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintEnd_toStartOf="@+id/ratingInputRA"
+        app:layout_constraintHorizontal_bias="0.758"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.837" />
@@ -109,6 +113,8 @@
         android:id="@+id/reviewInputRA"
         android:layout_width="410dp"
         android:layout_height="255dp"
+        android:gravity="top|left"
+        android:hint="Put review here"
         android:inputType="textMultiLine"
         android:lines="8"
         android:maxLines="10"
@@ -119,8 +125,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.642"
-        tools:text="Put review here" />
+        app:layout_constraintVertical_bias="0.663" />
 
     <TextView
         android:id="@+id/profnameLabelRA"
@@ -130,8 +135,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.093" />
 </androidx.constraintlayout.widget.ConstraintLayout>

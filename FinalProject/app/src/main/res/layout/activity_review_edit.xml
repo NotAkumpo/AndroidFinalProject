@@ -50,13 +50,13 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="(x)/10"
-        android:inputType="textPassword"
+        android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.601"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.625"
+        app:layout_constraintStart_toEndOf="@+id/ratingLabelRE"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.848" />
+        app:layout_constraintVertical_bias="0.847" />
 
     <Button
         android:id="@+id/cancelButtonRE"
@@ -100,22 +100,36 @@
         android:id="@+id/profnameLabelRE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginBottom="3dp"
         android:text="Professor Name"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="71dp" />
+        app:layout_constraintBottom_toTopOf="@+id/classLabelRE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editLabelRE" />
 
     <EditText
         android:id="@+id/reviewInputRE"
         android:layout_width="410dp"
         android:layout_height="255dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="top|left"
         android:inputType="textMultiLine"
         android:lines="8"
         android:maxLines="10"
         android:minLines="6"
         android:scrollbars="vertical"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="314dp"
+        android:translationX="20dp"
+        android:translationY="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/ratingInputRE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewLabelRE"
         tools:text="(Current Review)" />
 
     <TextView

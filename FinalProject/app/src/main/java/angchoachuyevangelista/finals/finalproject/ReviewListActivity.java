@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -136,7 +137,7 @@ public class ReviewListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
 
         realm = Realm.getDefaultInstance();
-        RealmResults<Review> list = realm.where(Review.class).findAll();
+        RealmResults<Review> list = realm.where(Review.class).equalTo("professorUuid", profUuid).findAll();
 
         ReviewAdapter adapter = new ReviewAdapter(this, list, true);
         recyclerView.setAdapter(adapter);
@@ -148,8 +149,53 @@ public class ReviewListActivity extends AppCompatActivity {
         });
     }
 
-    public void addReview(){
+    public void addReview()
+    {
         Intent intent = new Intent(this, ReviewAddActivity.class);
+        startActivity(intent);
+    }
+
+    public void delete(Review r){
+        if (r.isValid())
+        {
+
+            realm.beginTransaction();
+            r.deleteFromRealm();
+            realm.commitTransaction();
+
+            //Make a method here to delete all reviews as well
+        }
+    }
+
+    public void editReview(String adderUuid, String reviewUuid)
+    {
+        if(!currentUser.getUuid().equals(adderUuid))
+        {
+            denyEdit();
+        }
+        else {
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putString("reviewUuid", reviewUuid);
+            edit.apply();
+
+            Intent intent = new Intent(this, ReviewEditActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void denyEdit()
+    {
+        Toast toast = Toast.makeText(this, "Cannot edit other user's review", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    public void openReview(String uuid)
+    {
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putString("reviewUuid", uuid);
+        edit.apply();
+
+        Intent intent = new Intent(this, ReviewDetailActivity.class);
         startActivity(intent);
     }
 
@@ -161,4 +207,6 @@ public class ReviewListActivity extends AppCompatActivity {
             realm.close();
         }
     }
+
+
 }
