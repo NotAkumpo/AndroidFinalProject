@@ -160,33 +160,31 @@ public class ReviewListActivity extends AppCompatActivity {
         {
 
             realm.beginTransaction();
+            currentProf.removeRating(r.getOverallRating());
             r.deleteFromRealm();
             realm.commitTransaction();
+
+            String rating;
+            if (currentProf.getOverallRating() != null) {
+                rating = currentProf.getOverallRating().toString();
+            } else {
+                rating = "-";
+            }
+            String ratingPhrase = "Overall Rating: " + rating + " /10";
+            ratingLabel.setText(ratingPhrase);
 
             //Make a method here to delete all reviews as well
         }
     }
 
-    public void editReview(String adderUuid, String reviewUuid)
+    public void editReview(String reviewUuid)
     {
-        if(!currentUser.getUuid().equals(adderUuid))
-        {
-            denyEdit();
-        }
-        else {
-            SharedPreferences.Editor edit = prefs.edit();
-            edit.putString("reviewUuid", reviewUuid);
-            edit.apply();
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putString("reviewUuid", reviewUuid);
+        edit.apply();
 
-            Intent intent = new Intent(this, ReviewEditActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    public void denyEdit()
-    {
-        Toast toast = Toast.makeText(this, "Cannot edit other user's review", Toast.LENGTH_SHORT);
-        toast.show();
+        Intent intent = new Intent(this, ReviewEditActivity.class);
+        startActivity(intent);
     }
 
     public void openReview(String uuid)
@@ -197,6 +195,19 @@ public class ReviewListActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, ReviewDetailActivity.class);
         startActivity(intent);
+    }
+
+    public void onResume(){
+        super.onResume();
+
+        String rating;
+        if (currentProf.getOverallRating() != null) {
+            rating = currentProf.getOverallRating().toString();
+        } else {
+            rating = "-";
+        }
+        String ratingPhrase = "Overall Rating: " + rating + " /10";
+        ratingLabel.setText(ratingPhrase);
     }
 
     public void onDestroy()

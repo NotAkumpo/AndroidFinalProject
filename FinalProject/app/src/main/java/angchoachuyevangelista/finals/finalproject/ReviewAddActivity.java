@@ -20,6 +20,7 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.text.DecimalFormat;
 
 import io.realm.Realm;
 
@@ -129,39 +130,53 @@ public class ReviewAddActivity extends AppCompatActivity {
     }
 
     public void saveReview(){
-        String assessment = reviewInputRA.getText().toString();
-        String adderUuid = currentUser.getUuid();
-        String profUuid = currentProf.getUuid();
-        String adderUsername = currentUser.getName();
-        Double overallRating = Double.parseDouble(ratingInputRA.getText().toString());
-        String profName = currentProf.getFirstName()+ " " + currentProf.getLastName();
-        String profClass = currentProf.getClassTeaching();
-        String path = currentProf.getPath();
-
-        Review newReview =  new Review();
-        newReview.setAssessment(assessment);
-        newReview.setAdderUuid(adderUuid);
-        newReview.setProfessorUuid(profUuid);
-        newReview.setAdderUsername(adderUsername);
-        newReview.setOverallRating(overallRating);
-        newReview.setProfessorName(profName);
-        newReview.setProfessorClass(profClass);
-        newReview.setPath(path);
-
         try {
-            realm.beginTransaction();
-            realm.copyToRealmOrUpdate(newReview);
-            realm.commitTransaction();
+            String assessment = reviewInputRA.getText().toString();
+            String adderUuid = currentUser.getUuid();
+            String profUuid = currentProf.getUuid();
+            Double overallRating = Double.parseDouble(ratingInputRA.getText().toString());
 
-            Toast t = Toast.makeText(this, "Review for professor saved.", Toast.LENGTH_LONG);
+            if (overallRating <= 10) {
+                overallRating = Math.round(overallRating * 10.0) / 10.0;
+                String adderUsername = currentUser.getName();
+                String profName = currentProf.getFirstName() + " " + currentProf.getLastName();
+                String profClass = currentProf.getClassTeaching();
+                String path = currentUser.getPath();
+
+                Review newReview = new Review();
+                newReview.setAssessment(assessment);
+                newReview.setAdderUuid(adderUuid);
+                newReview.setProfessorUuid(profUuid);
+                newReview.setAdderUsername(adderUsername);
+                newReview.setOverallRating(overallRating);
+                newReview.setProfessorName(profName);
+                newReview.setProfessorClass(profClass);
+                newReview.setPath(path);
+
+                try {
+                    realm.beginTransaction();
+                    currentProf.updateRating(overallRating);
+                    realm.copyToRealmOrUpdate(newReview);
+                    realm.commitTransaction();
+
+                    Toast t = Toast.makeText(this, "Review for professor saved.", Toast.LENGTH_LONG);
+                    t.show();
+                } catch (Exception e) {
+                    Toast t = Toast.makeText(this, "Error saving", Toast.LENGTH_LONG);
+                    t.show();
+                }
+
+                finish();
+            } else {
+                Toast t = Toast.makeText(this, "Max rating is 10.", Toast.LENGTH_LONG);
+                t.show();
+            }
+
+        }
+        catch (Exception e){
+            Toast t = Toast.makeText(this, "Please input a valid overall rating.", Toast.LENGTH_LONG);
             t.show();
         }
 
-        catch(Exception e){
-            Toast t = Toast.makeText(this, "Error saving", Toast.LENGTH_LONG);
-            t.show();
-        }
-
-        finish();
     }
 }

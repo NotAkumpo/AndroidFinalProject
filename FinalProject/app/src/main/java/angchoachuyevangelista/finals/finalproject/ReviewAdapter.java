@@ -26,6 +26,8 @@ import io.realm.RealmRecyclerViewAdapter;
 
 public class ReviewAdapter extends RealmRecyclerViewAdapter<Review, ReviewAdapter.ViewHolder> {
 
+    SharedPreferences prefs;
+    String currentUuid;
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView reviewerLabel;
@@ -58,6 +60,9 @@ public class ReviewAdapter extends RealmRecyclerViewAdapter<Review, ReviewAdapte
         super(data, autoUpdate);
 
         this.activity = activity;
+        prefs = activity.getSharedPreferences("myPrefs", MODE_PRIVATE);
+        currentUuid = prefs.getString("uuid", null);
+
     }
 
     @NonNull
@@ -99,6 +104,13 @@ public class ReviewAdapter extends RealmRecyclerViewAdapter<Review, ReviewAdapte
             holder.reviewerImage.setImageResource(R.drawable.profile_pic);
         }
 
+        if(r.getAdderUuid().equals(currentUuid)){
+        }
+        else {
+            holder.deleteButton.setVisibility(View.GONE);
+            holder.editButton.setVisibility(View.GONE);
+        }
+
         holder.builder = new AlertDialog.Builder(activity);
         holder.deleteButton.setTag(r);
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -127,8 +139,7 @@ public class ReviewAdapter extends RealmRecyclerViewAdapter<Review, ReviewAdapte
 
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
-
-            public void onClick(View v) {activity.editReview(r.getAdderUuid(), r.getUuid());}
+            public void onClick(View v) {activity.editReview(r.getUuid());}
         });
 
         holder.searchButton.setOnClickListener(new View.OnClickListener() {

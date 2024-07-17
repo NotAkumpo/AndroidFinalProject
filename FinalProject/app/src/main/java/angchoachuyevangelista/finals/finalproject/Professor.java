@@ -76,16 +76,37 @@ public class Professor extends RealmObject {
 
     //Use this method to update the average rating of the prof everytime a review is added
     public void updateRating(Double r){
-        Double counter = overallRating * totalReviews;
+        Double counter;
+        if(overallRating != null){
+            counter = overallRating * totalReviews;
+        } else {
+            counter = 0.0;
+        }
         totalReviews += 1;
         overallRating = (counter + r) / totalReviews;
+        overallRating = Math.round(overallRating * 100.0) / 100.0;
     }
 
     //Use this method to update the average rating of the prof everytime a review is removed
     public void removeRating(Double r){
-        Double counter = overallRating * totalReviews;
+        Double counter;
+        if(overallRating != null){
+            counter = overallRating * totalReviews;
+        } else {
+            counter = 0.0;
+        }
         totalReviews -= 1;
         overallRating = (counter - r) / totalReviews;
+        overallRating = Math.round(overallRating * 100.0) / 100.0;
+        if(totalReviews == 0){
+            overallRating = null;
+        }
+    }
+
+    public void editRating(Double or, Double nr){
+        Double counter = overallRating * totalReviews - or + nr;
+        overallRating = counter / totalReviews;
+        overallRating = Math.round(overallRating * 100.0) / 100.0;
     }
 
     @Override

@@ -35,6 +35,8 @@ public class ReviewEditActivity extends AppCompatActivity {
     SharedPreferences prefs;
     Realm realm;
     Review currentReview;
+    Professor currentProf;
+    Double oldRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +52,16 @@ public class ReviewEditActivity extends AppCompatActivity {
         prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
 
         String reviewUuid = prefs.getString("reviewUuid", null);
+        String profUuid = prefs.getString("profUuid", null);
 
         realm = Realm.getDefaultInstance();
 
         currentReview = realm.where(Review.class)
                 .equalTo("uuid", reviewUuid)
+                .findFirst();
+
+        currentProf = realm.where(Professor.class)
+                .equalTo("uuid", profUuid)
                 .findFirst();
 
         profnameLabelRE = findViewById(R.id.profnameLabelRE);
@@ -85,6 +92,8 @@ public class ReviewEditActivity extends AppCompatActivity {
         ratingInputRE = findViewById((R.id.ratingInputRE));
         ratingInputRE.setText(Double.toString(currentReview.getOverallRating()));
 
+        oldRating = currentReview.getOverallRating();
+
         saveButtonRE = findViewById(R.id.saveButtonRE);
         saveButtonRE.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,15 +123,29 @@ public class ReviewEditActivity extends AppCompatActivity {
         }
         else
         {
-            realm.beginTransaction();
-            currentReview.setAssessment(newReview);
-            currentReview.setOverallRating(Double.parseDouble(newRating));
-            realm.commitTransaction();
+            try {
+                Double overallRating = Double.parseDouble(newRating);
+                if(overallRating <= 10) {
+                    overallRating = Math.round(overallRating * 10.0) / 10.0;
+                    realm.beginTransaction();
+                    currentReview.setAssessment(newReview);
+                    currentReview.setOverallRating(overallRating);
+                    currentProf.editRating(oldRating, overallRating);
+                    realm.commitTransaction();
 
-            Toast toast = Toast.makeText(this, "Review edited", Toast.LENGTH_LONG);
-            toast.show();
+                    Toast toast = Toast.makeText(this, "Review edited", Toast.LENGTH_LONG);
+                    toast.show();
 
-            finish();
+                    finish();
+                }
+                else {
+                    Toast toast = Toast.makeText(this, "Max rating is 10", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            } catch (Exception e) {
+                Toast t = Toast.makeText(this, "Please input a valid overall rating.", Toast.LENGTH_LONG);
+                t.show();
+            }
         }
     }
     public void blank(){
