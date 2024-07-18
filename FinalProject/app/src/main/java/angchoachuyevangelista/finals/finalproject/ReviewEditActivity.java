@@ -73,7 +73,7 @@ public class ReviewEditActivity extends AppCompatActivity {
         File getImageDir = getExternalCacheDir();
         professorImageRE = findViewById(R.id.professorImageRE);
 
-        File file = new File(getImageDir, currentReview.getPath());
+        File file = new File(getImageDir, currentProf.getPath());
 
         if (file.exists()) {
             Picasso.get()
@@ -125,7 +125,7 @@ public class ReviewEditActivity extends AppCompatActivity {
         {
             try {
                 Double overallRating = Double.parseDouble(newRating);
-                if(overallRating <= 10) {
+                if(overallRating <= 10 && overallRating >= 0) {
                     overallRating = Math.round(overallRating * 10.0) / 10.0;
                     realm.beginTransaction();
                     currentReview.setAssessment(newReview);
@@ -139,7 +139,7 @@ public class ReviewEditActivity extends AppCompatActivity {
                     finish();
                 }
                 else {
-                    Toast toast = Toast.makeText(this, "Max rating is 10", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(this, "Max rating is 10 and min rating is 0.", Toast.LENGTH_LONG);
                     toast.show();
                 }
             } catch (Exception e) {

@@ -32,8 +32,6 @@ public class ReviewListActivity extends AppCompatActivity {
     TextView profnameLabel;
     TextView classLabel;
     TextView ratingLabel;
-    ImageView userImage;
-    TextView usernameLabel;
     Button addButton;
     Button returnButton;
     ImageView profImage;
@@ -80,7 +78,7 @@ public class ReviewListActivity extends AppCompatActivity {
         } else {
             rating = "-";
         }
-        String ratingPhrase = "Overall Rating: " + rating + " /10";
+        String ratingPhrase = "Rating: " + rating + " /10";
         ratingLabel.setText(ratingPhrase);
 
         File getImageDir = getExternalCacheDir();
@@ -97,23 +95,6 @@ public class ReviewListActivity extends AppCompatActivity {
         }
         else {
             profImage.setImageResource(R.drawable.profile_pic);
-        }
-
-        usernameLabel = findViewById(R.id.usernameLabelRL);
-        usernameLabel.setText(currentUser.getName());
-
-        userImage = findViewById(R.id.userImageRL);
-        File file2 = new File(getImageDir, currentUser.getPath());
-
-        if (file2.exists()) {
-            Picasso.get()
-                    .load(file2)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .into(userImage);
-        }
-        else {
-            userImage.setImageResource(R.drawable.profile_pic);
         }
 
         addButton = findViewById(R.id.addReviewButtonRL);
@@ -170,7 +151,7 @@ public class ReviewListActivity extends AppCompatActivity {
             } else {
                 rating = "-";
             }
-            String ratingPhrase = "Overall Rating: " + rating + " /10";
+            String ratingPhrase = "Rating: " + rating + " /10";
             ratingLabel.setText(ratingPhrase);
 
             //Make a method here to delete all reviews as well
@@ -206,7 +187,7 @@ public class ReviewListActivity extends AppCompatActivity {
         } else {
             rating = "-";
         }
-        String ratingPhrase = "Overall Rating: " + rating + " /10";
+        String ratingPhrase = "Rating: " + rating + " /10";
         ratingLabel.setText(ratingPhrase);
     }
 

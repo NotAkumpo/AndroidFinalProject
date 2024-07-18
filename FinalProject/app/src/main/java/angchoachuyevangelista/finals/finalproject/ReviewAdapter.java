@@ -90,7 +90,7 @@ public class ReviewAdapter extends RealmRecyclerViewAdapter<Review, ReviewAdapte
         } else {
             rating = "-";
         }
-        String ratingPhrase = "Overall Rating: " + rating + " /10";
+        String ratingPhrase = "Rating: " + rating + " /10";
         holder.ratingLabel.setText(ratingPhrase);
 
         if (file.exists()) {

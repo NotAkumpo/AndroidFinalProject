@@ -136,7 +136,7 @@ public class ReviewAddActivity extends AppCompatActivity {
             String profUuid = currentProf.getUuid();
             Double overallRating = Double.parseDouble(ratingInputRA.getText().toString());
 
-            if (overallRating <= 10) {
+            if (overallRating <= 10 && overallRating >= 0) {
                 overallRating = Math.round(overallRating * 10.0) / 10.0;
                 String adderUsername = currentUser.getName();
                 String profName = currentProf.getFirstName() + " " + currentProf.getLastName();
@@ -168,7 +168,7 @@ public class ReviewAddActivity extends AppCompatActivity {
 
                 finish();
             } else {
-                Toast t = Toast.makeText(this, "Max rating is 10.", Toast.LENGTH_LONG);
+                Toast t = Toast.makeText(this, "Max rating is 10 and min rating is 0.", Toast.LENGTH_LONG);
                 t.show();
             }
 

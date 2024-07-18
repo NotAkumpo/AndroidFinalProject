@@ -18,6 +18,8 @@
         <item name="android:buttonStyle">@style/BlackTextButton</item>
         <item name="buttonStyle">@style/BlackTextButton</item>
         <item name="colorButtonNormal">#FECB10</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
     <style name="BlackTextButton" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/black</item>

@@ -36,12 +36,12 @@ public class UserAdapter extends RealmRecyclerViewAdapter<User, UserAdapter.View
         public ViewHolder(@NonNull View itemView){
             super(itemView);
 
-            imageViewA = itemView.findViewById(R.id.professorImagePL);
-            usernameDisplay = itemView.findViewById(R.id.profnameLabelPL);
-            passwordDisplay = itemView.findViewById(R.id.classLabelPL);
+            imageViewA = itemView.findViewById(R.id.userImageUL);
+            usernameDisplay = itemView.findViewById(R.id.usernameLabelUL);
+            passwordDisplay = itemView.findViewById(R.id.passwordLabelUL);
 
-            deleteButton = itemView.findViewById(R.id.deleteButton);
-            editButton = itemView.findViewById(R.id.searchButtonPL);
+            deleteButton = itemView.findViewById(R.id.deleteButtonUL);
+            editButton = itemView.findViewById(R.id.editButtonUL);
         }
     }
 

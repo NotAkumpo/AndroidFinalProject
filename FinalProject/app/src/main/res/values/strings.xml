@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FinalProject</string>
+    <string name="app_name">RateMyProf</string>
 
     <!-- THIS MUST MATCH YOUR APP PACKAGE NAME OR ELSE CAMERA WILL-->
     <!-- INDICATE A CONFLICTING PROVIDER -->

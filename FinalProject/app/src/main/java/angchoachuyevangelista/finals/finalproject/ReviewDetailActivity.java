@@ -2,6 +2,7 @@ package angchoachuyevangelista.finals.finalproject;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +31,9 @@ public class ReviewDetailActivity extends AppCompatActivity {
     ImageView professorImageRD;
     TextView reviewDetailRD;
     TextView ratingDisplay;
+    TextView reviewDetail;
     Button returnButtonRD;
+    Professor currentProf;
     SharedPreferences prefs;
     Realm realm;
 
@@ -48,6 +51,8 @@ public class ReviewDetailActivity extends AppCompatActivity {
         prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
 
         String reviewUuid = prefs.getString("reviewUuid", null);
+        String profUuid = prefs.getString("profUuid", null);
+
 
         realm = Realm.getDefaultInstance();
 
@@ -55,8 +60,12 @@ public class ReviewDetailActivity extends AppCompatActivity {
                 .equalTo("uuid", reviewUuid)
                 .findFirst();
 
+        currentProf = realm.where(Professor.class)
+                .equalTo("uuid", profUuid)
+                .findFirst();
+
         userLabelRD = findViewById(R.id.userLabelRD);
-        userLabelRD.setText(currentReview.getAdderUsername() + "'s Review");
+        userLabelRD.setText(currentReview.getAdderUsername());
 
         profnameLabelRD = findViewById(R.id.profnameLabelRD);
         profnameLabelRD.setText(currentReview.getProfessorName());
@@ -68,12 +77,15 @@ public class ReviewDetailActivity extends AppCompatActivity {
         reviewDetailRD.setText(currentReview.getAssessment());
 
         ratingDisplay = findViewById(R.id.ratingdisplayRD);
-        ratingDisplay.setText(Double.toString(currentReview.getOverallRating()));
+        ratingDisplay.setText(String.format("%s/10", Double.toString(currentReview.getOverallRating())));
+
+        reviewDetail = findViewById(R.id.reviewDetailRD);
+        reviewDetail.setMovementMethod(new ScrollingMovementMethod());
 
         File getImageDir = getExternalCacheDir();
         professorImageRD = findViewById(R.id.professorImageRD);
 
-        File file = new File(getImageDir, currentReview.getPath());
+        File file = new File(getImageDir, currentProf.getPath());
 
         if (file.exists()) {
             Picasso.get()

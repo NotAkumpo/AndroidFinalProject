@@ -103,7 +103,7 @@ public class EditActivity extends AppCompatActivity {
                     .into(imageViewE);
         }
         else {
-            imageViewE.setImageResource(R.mipmap.ic_launcher);
+            imageViewE.setImageResource(R.drawable.profile_pic);
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

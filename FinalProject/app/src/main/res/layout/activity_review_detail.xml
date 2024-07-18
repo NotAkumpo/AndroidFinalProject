@@ -11,25 +11,54 @@
         android:id="@+id/userLabelRD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(Review Maker Name)'s Review"
-        android:textSize="24sp"
+        android:text="Name"
+        android:textColor="#808080"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ratingdisplayRD"
+        app:layout_constraintHorizontal_bias="0.005"
+        app:layout_constraintStart_toStartOf="@+id/reviewLabelRD"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.187" />
+
+    <TextView
+        android:id="@+id/classLabelRD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Class"
+        android:textColor="#808080"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.365"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.055" />
+        app:layout_constraintVertical_bias="0.087" />
+
+    <TextView
+        android:id="@+id/profnameLabelRD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Professor Name"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/classLabelRD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/classLabelRD"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.384" />
 
     <ImageView
         android:id="@+id/professorImageRD"
-        android:layout_width="155dp"
-        android:layout_height="155dp"
+        android:layout_width="80dp"
+        android:layout_height="73dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintEnd_toStartOf="@+id/profnameLabelRD"
+        app:layout_constraintHorizontal_bias="0.519"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.208"
+        app:layout_constraintVertical_bias="0.024"
         app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
@@ -39,10 +68,10 @@
         android:text="Review:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.094"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="@+id/reviewDetailRD"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.399" />
+        app:layout_constraintVertical_bias="0.237" />
 
     <Button
         android:id="@+id/returnButtonRD"
@@ -54,7 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.938" />
+        app:layout_constraintVertical_bias="0.932" />
 
     <TextView
         android:id="@+id/ratingLabelRD"
@@ -63,41 +92,26 @@
         android:text="Overall Rating: "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.173"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/ratingdisplayRD"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.838" />
-
-    <TextView
-        android:id="@+id/profnameLabelRD"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="132dp"
-        android:layout_marginBottom="1dp"
-        android:text="Professor Name"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/classLabelRD"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userLabelRD" />
+        app:layout_constraintVertical_bias="0.152" />
 
     <TextView
         android:id="@+id/reviewDetailRD"
-        android:layout_width="389dp"
-        android:layout_height="254dp"
+        android:layout_width="346dp"
+        android:layout_height="358dp"
         android:layout_margin="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="28dp"
         android:gravity="left"
         android:outlineProvider="bounds"
         android:text="(Maker's Review)"
         android:translationX="20dp"
         android:translationY="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/ratingdisplayRD"
+        android:lines="26"
+        android:maxLines="10"
+        android:minLines="6"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,26 +119,26 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/classLabelRD"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Class"
-        android:textSize="16sp"
+        android:id="@+id/ratingdisplayRD"
+        android:layout_width="137dp"
+        android:layout_height="21dp"
+        android:layout_marginEnd="28dp"
+        android:hint="x/10"
+        android:textColor="#808080"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.138" />
+        app:layout_constraintVertical_bias="0.188" />
 
     <TextView
-        android:id="@+id/ratingdisplayRD"
-        android:layout_width="176dp"
-        android:layout_height="20dp"
-        android:hint="x/10"
+        android:id="@+id/reviewerSignRD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reviewer:"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.339"
-        app:layout_constraintStart_toEndOf="@+id/ratingLabelRD"
+        app:layout_constraintEnd_toStartOf="@+id/ratingLabelRD"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/userLabelRD"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.838" />
+        app:layout_constraintVertical_bias="0.152" />
 </androidx.constraintlayout.widget.ConstraintLayout>
